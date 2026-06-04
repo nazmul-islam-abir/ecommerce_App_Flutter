@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/screens/dashboard.dart';
-import 'package:ecommerce_app/screens/init.dart';
+import 'package:ecommerce_app/screens/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {

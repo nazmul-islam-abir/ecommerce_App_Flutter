@@ -5,6 +5,7 @@
   
   <img src="assets\Screenshot 2026-06-04 172043.png" alt="Dashboard Screen" width="250"/>
   <img src="assets\Screenshot 2026-06-04 172644.png" alt="Dashboard Screen" width="250"/>
+  <img src="assets\Screenshot 2026-06-04 211937.png" alt="Dashboard Screen" width="250"/>
   <br/>
   <em>Left: Initial Screen | Right: Dashboard Screen</em>
 </div>

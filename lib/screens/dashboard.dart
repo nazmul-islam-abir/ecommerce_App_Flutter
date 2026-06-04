@@ -27,7 +27,7 @@ class _dashScreenState extends State<dashScreen> {
       "price": "600 tk",
       "image": "pexels-ekrulila-28086454.jpg",
     },
-     {
+    {
       "name": "Wallet",
       "price": "600 tk",
       "image": "pexels-jonathanborba-12031206.jpg",
@@ -42,7 +42,6 @@ class _dashScreenState extends State<dashScreen> {
       "price": "600 tk",
       "image": "pexels-vishnu-v-n-184319568-11263089.jpg",
     },
-    
   ];
 
   List rightProducts = [
@@ -78,10 +77,37 @@ class _dashScreenState extends State<dashScreen> {
     },
   ];
 
+  List flash = [
+    {
+      "name": "Oxford Shoes",
+      "price": "৳4,500",
+      "discount": "-30%",
+      "image": "pexels-rohit-sharma-1230131-26587836.jpg",
+    },
+    {
+      "name": "Rolex Watch",
+      "price": "৳600,000",
+      "discount": "-15%",
+      "image": "pexels-sinarz97-26595749.jpg",
+    },
+    {
+      "name": "Leather Wallet",
+      "price": "৳600",
+      "discount": "-40%",
+      "image": "pexels-ekrulila-28086454.jpg",
+    },
+    {
+      "name": "Formal Suit",
+      "price": "৳10,000",
+      "discount": "-25%",
+      "image": "pexels-peep-this-photo-1766934996-29379168.jpg",
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: [
           Container(
@@ -138,418 +164,563 @@ class _dashScreenState extends State<dashScreen> {
             ),
           ),
           SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text('Flash Sells', style: GoogleFonts.robotoMono(fontSize: 24),),
+                SizedBox(width: 5,),
+                Icon(CupertinoIcons.flame,color: Colors.red,)
+              ],
+            ),
+          ),
 
-          Expanded(
-            child: SizedBox(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
+          Column(
+            children: [
+              
+              Container(
+                height: 200,
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(255, 222, 244, 249),
+                  color:const Color.fromARGB(255, 222, 244, 249),
+                  borderRadius: BorderRadius.circular(20)
+                  
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 70,
-
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 12,
-                                  right: 3,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: flash.length,
+                  itemBuilder: (context, index) {
+                    final item = flash[index];
+              
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 150,
+                        height: 180,
+                        child: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.asset(
+                                item['image'],
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                              ),
+                            ),
+              
+                            Positioned(
+                              top: 8,
+                              right: 8,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  item['discount'],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+              
+                            Positioned(
+                              left: 10,
+                              right: 10,
+                              bottom: 10,
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(78, 0, 0, 0),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Container(
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                          255,
-                                          255,
-                                          255,
-                                          255,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                        border: Border.all(),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "Trending",
-                                              style: GoogleFonts.robotoMono(
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            Icon(CupertinoIcons.flame_fill),
-                                          ],
-                                        ),
+                                    Text(
+                                      item['name'],
+                                      style: GoogleFonts.robotoMono(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Column(),
+                                    Text(
+                                      item['price'],
+                                      style: GoogleFonts.robotoMono(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 12,
-                                  left: 3,
-                                  right: 3,
-                                ),
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 5),
+           Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text('All Products', style: GoogleFonts.robotoMono(fontSize: 24),),
+                SizedBox(width: 5,),
+                Icon(CupertinoIcons.flame,color: Colors.red,)
+              ],
+            ),
+          ),
+          Expanded(
+            child: SizedBox(
+              child: SingleChildScrollView(
+                child: Container(
+                  height: 1000,
+                  width: MediaQuery.of(context).size.width,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: const Color.fromARGB(255, 222, 244, 249),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                       
+                      
+
+                        Container(
+                          height: 70,
+
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                    right: 3,
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Shoes",
-                                          style: GoogleFonts.robotoMono(
-                                            fontSize: 16,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                            255,
+                                            255,
+                                            255,
+                                            255,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            15,
+                                          ),
+                                          border: Border.all(),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Trending",
+                                                style: GoogleFonts.robotoMono(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              Icon(CupertinoIcons.flame_fill),
+                                            ],
                                           ),
                                         ),
-                                        SizedBox(width: 5),
-                                        Image.asset(
-                                          'icons/shoes.png',
-                                          width: 24,
-                                          height: 24,
-                                        ),
-                                      ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                    left: 3,
+                                    right: 3,
+                                  ),
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Shoes",
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5),
+                                          Image.asset(
+                                            'icons/shoes.png',
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                    left: 3,
+                                    right: 3,
+                                  ),
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Watches",
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5),
+                                          Image.asset(
+                                            'icons/wrist-watch.png',
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                    left: 3,
+                                    right: 3,
+                                  ),
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Wallet",
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5),
+                                          Image.asset(
+                                            'icons/wallet.png',
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                    left: 3,
+                                    right: 3,
+                                  ),
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Cloths",
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5),
+                                          Image.asset(
+                                            'icons/brand.png',
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                    left: 3,
+                                    right: 3,
+                                  ),
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Shirts",
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Image.asset(
+                                            'icons/tshirt.png',
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                    left: 3,
+                                    right: 3,
+                                  ),
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Bags",
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Image.asset(
+                                            'icons/online-shopping.png',
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                    left: 3,
+                                    right: 3,
+                                  ),
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Pants",
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Image.asset(
+                                            'icons/pants.png',
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: leftProducts.length,
+                                  itemBuilder: (context, index) {
+                                    final item = leftProducts[index];
+
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 15,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            child: Image.asset(
+                                              item['image'],
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            item['name'],
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          Text(
+                                            item['price'],
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 12,
-                                  left: 3,
-                                  right: 3,
-                                ),
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Watches",
-                                          style: GoogleFonts.robotoMono(
-                                            fontSize: 16,
+
+                              SizedBox(width: 8),
+
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: rightProducts.length,
+                                  itemBuilder: (context, index) {
+                                    final item = rightProducts[index];
+
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 15,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            child: Image.asset(
+                                              item['image'],
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(width: 5),
-                                        Image.asset(
-                                          'icons/wrist-watch.png',
-                                          width: 24,
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 12,
-                                  left: 3,
-                                  right: 3,
-                                ),
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Wallet",
-                                          style: GoogleFonts.robotoMono(
-                                            fontSize: 16,
+                                          SizedBox(height: 5),
+                                          Text(
+                                            item['name'],
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 18,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(width: 5),
-                                        Image.asset(
-                                          'icons/wallet.png',
-                                          width: 24,
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 12,
-                                  left: 3,
-                                  right: 3,
-                                ),
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Cloths",
-                                          style: GoogleFonts.robotoMono(
-                                            fontSize: 16,
+                                          Text(
+                                            item['price'],
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(width: 5),
-                                        Image.asset(
-                                          'icons/brand.png',
-                                          width: 24,
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 12,
-                                  left: 3,
-                                  right: 3,
-                                ),
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Shirts",
-                                          style: GoogleFonts.robotoMono(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Image.asset(
-                                          'icons/tshirt.png',
-                                          width: 24,
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 12,
-                                  left: 3,
-                                  right: 3,
-                                ),
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Bags",
-                                          style: GoogleFonts.robotoMono(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Image.asset(
-                                          'icons/online-shopping.png',
-                                          width: 24,
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 12,
-                                  left: 3,
-                                  right: 3,
-                                ),
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Pants",
-                                          style: GoogleFonts.robotoMono(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Image.asset(
-                                          'icons/pants.png',
-                                          width: 24,
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-
-                      Expanded(
-                        child: Row(
-                          children: [
-                           Expanded(
-  child: ListView.builder(
-    itemCount: leftProducts.length,
-    itemBuilder: (context, index) {
-      final item = leftProducts[index];
-
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                item['image'],
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              item['name'],
-              style: GoogleFonts.robotoMono(fontSize: 18),
-            ),
-            Text(
-              item['price'],
-              style: GoogleFonts.robotoMono(fontSize: 16),
-            ),
-          ],
-        ),
-      );
-    },
-  ),
-),
-
-                            SizedBox(width: 8),
-
-                            Expanded(
-  child: ListView.builder(
-    itemCount: rightProducts.length,
-    itemBuilder: (context, index) {
-      final item = rightProducts[index];
-
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                item['image'],
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              item['name'],
-              style: GoogleFonts.robotoMono(fontSize: 18),
-            ),
-            Text(
-              item['price'],
-              style: GoogleFonts.robotoMono(fontSize: 16),
-            ),
-          ],
-        ),
-      );
-    },
-  ),
-),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

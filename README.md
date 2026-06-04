@@ -1,6 +1,8 @@
 <div align="center">
   <!-- Add your two screenshots here -->
   <img src="assets\Screenshot 2026-06-04 172015.png" alt="Initial Screen" width="250"/>
+  <img src="assets\Screenshot 2026-06-04 172858.png" alt="Initial Screen" width="250"/>
+  
   <img src="assets\Screenshot 2026-06-04 172043.png" alt="Dashboard Screen" width="250"/>
   <img src="assets\Screenshot 2026-06-04 172644.png" alt="Dashboard Screen" width="250"/>
   <br/>

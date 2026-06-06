@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/screens/dashboard.dart';
+import 'package:ecommerce_app/screens/list.dart';
 import 'package:ecommerce_app/screens/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -143,7 +144,7 @@ class searchPage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => searchPage()),
+                    MaterialPageRoute(builder: (context) => OrderListScreen()),
                   );
                 },
                 child: Icon(CupertinoIcons.square_favorites),

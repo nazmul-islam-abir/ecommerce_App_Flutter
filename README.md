@@ -1,9 +1,13 @@
-# 👔 Menvogue - Men's Fashion E-Commerce App
+# Menvogue 👔
+
+A modern Flutter-based men's fashion e-commerce application integrated with Supabase REST API.
+
 
 <div align="center">
   <img src="assets/1.png" width="200" alt="Splash Screen"/>
   <img src="assets/2.png" width="200" alt="Dashboard Screen"/>
   <img src="assets/3.png" width="200" alt="Flash Sale Screen"/>
+  <img src="assets/8.png" width="200" alt="Search Screen"/>
   <br/>
   <img src="assets/4.png" width="200" alt="Search Screen"/>
   <img src="assets/5.png" width="200" alt="Profile Screen"/>
@@ -13,82 +17,196 @@
   <em>Menvogue - Modern Men's Fashion E-Commerce App</em>
 </div>
 
-## 📱 Overview
-
-**Menvogue** is a feature-rich e-commerce mobile application built with **Flutter** that provides a seamless shopping experience for men's fashion products, including shoes, watches, wallets, clothing, and accessories. The app integrates with **Supabase** backend for real-time data fetching and offers a modern, intuitive user interface.
-
 ## ✨ Features
 
-### 🚀 Splash/Onboarding Screen
-- Horizontal scrolling categories (Fashion, Wallets, Perfumes, Shoes)
-- Rotated text design for modern aesthetics
-- Brand name "Menvogue" prominently displayed
-- Discover button for navigation to dashboard
+### 🏠 Home Dashboard
 
-### 📊 Dashboard Screen
-- Custom header with menu icon, brand name, and shopping bag
-- Search bar for product discovery
-- **Flash Sales Section** - Horizontal scroll of discounted products with discount badges
-- **Category Filters** - Trending, Shoes, Watches, Wallet, Cloths, Shirts, Bags, Pants
-- **Product Grid** - Responsive two-column grid layout
-- **Bottom Navigation** - Home, Search, Favorites, Profile
+* Modern UI design
+* Product categories
+* Flash sale section
+* Product grid layout
+* Responsive design
 
-### 🔥 Flash Sale Screen
-- Dedicated page for all discounted products
-- Percentage-off discount badges
-- Special header with flash sale branding
+### 🔥 Flash Sales
 
-### 🔍 Search Screen
-- Dedicated product search interface
-- Back navigation to dashboard
+* Featured products
+* Discount badges
+* Horizontal scrolling cards
+* Real-time data from Supabase
 
-### 👤 Profile Screen
-- User profile display (name, email, profile picture)
-- Account sections (Orders, Favorites, Shipping Address, Cards, Vouchers)
-- Logout option
+### 🛍️ Product Catalog
 
-## 🛠️ Tech Stack
+* Product image
+* Product name
+* Product price
+* Product ratings
+* Category filtering
+* Grid view layout
 
-| Technology | Purpose |
-|------------|---------|
-| Flutter | Frontend framework |
-| Dart | Programming language |
-| Supabase | Backend database & API |
-| HTTP Package | API calls & data fetching |
-| Google Fonts | Custom typography |
-| Cupertino Icons | iOS-style icons |
+### 🔍 Search
 
-## 📡 API Integration
+* Product search interface
+* Quick product discovery
+* User-friendly navigation
 
-### Supabase Connection
+### 📦 Order Management
 
-The app connects to a **Supabase** backend with two main tables:
+* View all orders
+* Order status tracking
+* Order history
+* Product thumbnails
+* Order date display
+* Total price calculation
+* Item count tracking
 
-**Products Table** (`/rest/v1/products`)
-- Fetch all available products
-- Fields: `id`, `name`, `price`, `image`, `category`
+### 👤 User Profile
 
-**Flash Sale Table** (`/rest/v1/flashsale`)
-- Fetch discounted products
-- Fields: `id`, `name`, `price`, `image_url`, `discount`
+* Profile management page
+* User account section
 
-### How API Calls Work
+---
 
-```dart
-// API Headers with Supabase Key
-headers: {
-  "apikey": "YOUR_SUPABASE_API_KEY"
-}
+## 🛠️ Technologies Used
 
-// Fetch Products Example
-Future<void> fetchProducts() async {
-  final response = await http.get(
-    Uri.parse('URL/products'),
-    headers: { "apikey": "KEY" },
-  );
-  
-  if (response.statusCode == 200) {
-    final jsonData = jsonDecode(response.body);
-    setState(() => allProducts = jsonData);
-  }
-}
+* Flutter
+* Dart
+* Supabase
+* REST API
+* HTTP Package
+* Google Fonts
+
+---
+
+## 🗄️ Database Tables
+
+### Products Table
+
+| Column        | Type    |
+| ------------- | ------- |
+| id            | bigint  |
+| name          | text    |
+| price         | integer |
+| image         | text    |
+| rating        | numeric |
+| category      | text    |
+| is_flash_sale | boolean |
+| discount      | text    |
+
+### Orders Table (myorders)
+
+| Column      | Type    |
+| ----------- | ------- |
+| order_id    | text    |
+| image_url   | text    |
+| date        | text    |
+| items_count | integer |
+| status      | text    |
+| total_price | integer |
+
+---
+
+## 🔌 API Integration
+
+### Products API
+
+```http
+GET /rest/v1/products?select=*
+```
+
+### Flash Sale Products
+
+```http
+GET /rest/v1/products?is_flash_sale=eq.true
+```
+
+### Orders API
+
+```http
+GET /rest/v1/myorders
+```
+
+The application uses Supabase REST API endpoints and retrieves data through HTTP requests.
+
+---
+
+## 🏗️ Architecture
+
+```text
+Flutter App
+     │
+     ▼
+HTTP Requests
+     │
+     ▼
+Supabase REST API
+     │
+ ┌───┴──────────┐
+ ▼              ▼
+Products      Orders
+Table         Table
+```
+
+---
+
+## 📱 Screens
+
+* Dashboard Screen
+* Search Screen
+* Order List Screen
+* Profile Screen
+
+---
+
+## 🚀 Future Improvements
+
+* User Authentication
+* Shopping Cart
+* Wishlist
+* Checkout Flow
+* Payment Gateway Integration
+* Push Notifications
+* Product Reviews
+* Order Tracking Timeline
+* Admin Dashboard
+
+---
+
+## ⚙️ Setup
+
+```bash
+flutter pub get
+flutter run
+```
+
+### Build APK
+
+```bash
+flutter build apk --release
+```
+
+### Build Web
+
+```bash
+flutter build web
+```
+
+---
+
+## 📚 Learning Objectives
+
+This project demonstrates:
+
+* Flutter UI Development
+* REST API Integration
+* Cloud Database Management
+* State Management with StatefulWidget
+* JSON Parsing
+* HTTP Requests
+* Supabase Backend Integration
+* E-commerce Application Design
+
+---
+
+## 👨‍💻 Developer
+
+Developed as a learning project to explore Flutter application development and cloud backend integration using Supabase.

@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/screens/dashboard.dart';
+import 'package:ecommerce_app/screens/list.dart';
 import 'package:ecommerce_app/screens/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(width: 15),
                       // Title
                       Text(
-                        'Menvogue',
+                        'Profile',
                         style: GoogleFonts.cormorant(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -140,7 +141,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           "My Orders",
                           style: GoogleFonts.robotoMono(fontSize: 20),
                         ),
-                        Icon(Icons.arrow_right),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OrderListScreen(),
+                              ),
+                            );
+                          },
+                          child: Icon(Icons.arrow_circle_right),
+                        ),
                       ],
                     ),
 
@@ -241,7 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => searchPage()),
+                    MaterialPageRoute(builder: (context) => OrderListScreen()),
                   );
                 },
                 child: Icon(CupertinoIcons.square_favorites),

@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/screens/dashboard.dart';
+import 'package:ecommerce_app/screens/list.dart';
 import 'package:ecommerce_app/screens/profile.dart';
 import 'package:ecommerce_app/screens/search.dart';
 
@@ -97,7 +98,7 @@ class _flashSaleState extends State<flashSale> {
                       const SizedBox(width: 15),
                       // Title
                       Text(
-                        'Menvogue',
+                        'Flash Sales',
                         style: GoogleFonts.cormorant(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -109,48 +110,8 @@ class _flashSaleState extends State<flashSale> {
               ),
             ),
           ),
-          SizedBox(height: 5,),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => dashScreen()),
-                      );
-                    },
-                    child: Icon(CupertinoIcons.back),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    "Flash sale",
-                    style: GoogleFonts.robotoMono(fontSize: 18),
-                  ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      hintText: 'Flash Sale',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          SizedBox(height: 5),
+
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -180,7 +141,7 @@ class _flashSaleState extends State<flashSale> {
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
                                         child: Image.network(
-                                          item['image_url']?.toString() ?? '',
+                                          item['image_url'].toString(),
                                           width: double.infinity,
                                           height: double.infinity,
                                           fit: BoxFit.cover,
@@ -200,21 +161,21 @@ class _flashSaleState extends State<flashSale> {
                                         top: 8,
                                         right: 8,
                                         child: Container(
-                                          
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
-                                              color: Colors.white
-                                              
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: Colors.white,
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding: const EdgeInsets.all(
+                                                8.0,
+                                              ),
                                               child: Text(
                                                 "-${item['discount'].toString()}%",
                                                 style: GoogleFonts.robotoMono(
                                                   color: Colors.redAccent,
                                                   fontWeight: FontWeight.bold,
-                                                  
                                                 ),
                                               ),
                                             ),
@@ -234,7 +195,14 @@ class _flashSaleState extends State<flashSale> {
                                       children: [
                                         Text(item['name'].toString()),
                                         const SizedBox(height: 4),
-                                        Text(item['price'].toString()),
+                                        Text('tk: ${item['price'].toString()}'),
+                                        Row(
+                                          children: [
+                                            Text("Buy Now"),
+                                            SizedBox(width: 5),
+                                            Icon(CupertinoIcons.shopping_cart),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -249,7 +217,7 @@ class _flashSaleState extends State<flashSale> {
           ),
         ],
       ),
-       bottomNavigationBar: Padding(
+      bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(top: 5),
         child: Container(
           height: 60,
@@ -285,7 +253,7 @@ class _flashSaleState extends State<flashSale> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => searchPage()),
+                    MaterialPageRoute(builder: (context) => OrderListScreen()),
                   );
                 },
                 child: Icon(CupertinoIcons.square_favorites),

@@ -1,7 +1,7 @@
 # 👔 Menvogue - Men's Fashion E-Commerce App
 
 <div align="center">
-  <img src="assets/1.png.png" width="200" alt="Splash Screen"/>
+  <img src="assets/1.png" width="200" alt="Splash Screen"/>
   <img src="assets/2.png" width="200" alt="Dashboard Screen"/>
   <img src="assets/3.png" width="200" alt="Flash Sale Screen"/>
   <br/>

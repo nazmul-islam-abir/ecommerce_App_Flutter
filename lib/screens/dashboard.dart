@@ -1,7 +1,13 @@
+import 'package:ecommerce_app/screens/flashsale.dart';
+import 'package:ecommerce_app/screens/profile.dart';
+import 'package:ecommerce_app/screens/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class dashScreen extends StatefulWidget {
   const dashScreen({super.key});
@@ -11,724 +17,733 @@ class dashScreen extends StatefulWidget {
 }
 
 class _dashScreenState extends State<dashScreen> {
-  List leftProducts = [
-    {
-      "name": "Shoes & Watch",
-      "price": "5000 tk",
-      "image": "pexels-mnzoutfits-1619655.jpg",
-    },
-    {
-      "name": "Oxford Shoes",
-      "price": "6000 tk",
-      "image": "pexels-rohit-sharma-1230131-26587836.jpg",
-    },
-    {
-      "name": "Wallet",
-      "price": "600 tk",
-      "image": "pexels-ekrulila-28086454.jpg",
-    },
-    {
-      "name": "Wallet",
-      "price": "600 tk",
-      "image": "pexels-jonathanborba-12031206.jpg",
-    },
-    {
-      "name": "Wallet",
-      "price": "600 tk",
-      "image": "pexels-rebornfilmes-31280435.jpg",
-    },
-    {
-      "name": "Wallet",
-      "price": "600 tk",
-      "image": "pexels-vishnu-v-n-184319568-11263089.jpg",
-    },
-  ];
+  List allProducts = [];
+  bool isloading = true;
 
-  List rightProducts = [
-    {
-      "name": "Formal Suit",
-      "price": "10000 tk",
-      "image": "pexels-peep-this-photo-1766934996-29379168.jpg",
-    },
-    {
-      "name": "Wallet",
-      "price": "600 tk",
-      "image": "pexels-jonathanborba-12031206.jpg",
-    },
-    {
-      "name": "Wallet",
-      "price": "600 tk",
-      "image": "pexels-rebornfilmes-31280435.jpg",
-    },
-    {
-      "name": "Wallet",
-      "price": "600 tk",
-      "image": "pexels-vishnu-v-n-184319568-11263089.jpg",
-    },
-    {
-      "name": "Black Shoes",
-      "price": "4000 tk",
-      "image": "pexels-ron-lach-9464625.jpg",
-    },
-    {
-      "name": "Rolex Watch",
-      "price": "600000 tk",
-      "image": "pexels-sinarz97-26595749.jpg",
-    },
-  ];
+  List flashProducts = [];
 
-  List flash = [
-    {
-      "name": "Oxford Shoes",
-      "price": "৳4,500",
-      "discount": "-30%",
-      "image": "pexels-rohit-sharma-1230131-26587836.jpg",
-    },
-    {
-      "name": "Rolex Watch",
-      "price": "৳600,000",
-      "discount": "-15%",
-      "image": "pexels-sinarz97-26595749.jpg",
-    },
-    {
-      "name": "Leather Wallet",
-      "price": "৳600",
-      "discount": "-40%",
-      "image": "pexels-ekrulila-28086454.jpg",
-    },
-    {
-      "name": "Formal Suit",
-      "price": "৳10,000",
-      "discount": "-25%",
-      "image": "pexels-peep-this-photo-1766934996-29379168.jpg",
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    fetchProducts();
+    flashProduct();
+  }
+
+  Future<void> flashProduct() async {
+    try {
+      final response = await http.get(
+        Uri.parse("https://yqovktbsrmldgqmnagak.supabase.co/rest/v1/flashsale"),
+        headers: {
+          "apikey":
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlxb3ZrdGJzcm1sZGdxbW5hZ2FrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNDQxNDUsImV4cCI6MjA5NTYyMDE0NX0.lioBvYPVjBqy2kCrFtIAKzqxKxiNcAtIdWgvDeDTqTg",
+        },
+      );
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        setState(() {
+          isloading = false;
+          flashProducts = jsonData;
+        });
+      } else {
+        setState(() {
+          isloading = false;
+          print("Failed to load products");
+        });
+      }
+    } catch (e) {
+      print("Error: $e");
+      setState(() {
+        isloading = false;
+      });
+    }
+  }
+
+  Future<void> fetchProducts() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://yqovktbsrmldgqmnagak.supabase.co/rest/v1/products'),
+        headers: {
+          "apikey":
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlxb3ZrdGJzcm1sZGdxbW5hZ2FrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNDQxNDUsImV4cCI6MjA5NTYyMDE0NX0.lioBvYPVjBqy2kCrFtIAKzqxKxiNcAtIdWgvDeDTqTg",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+
+        setState(() {
+          allProducts = jsonData;
+          isloading = false;
+        });
+      } else {
+        print("Failed to load products");
+        setState(() => isloading = false);
+      }
+    } catch (e) {
+      setState(() => isloading = false);
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.height,
-            height: MediaQuery.of(context).size.height * 0.2,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 222, 244, 249),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(Icons.menu),
-                      Text(
-                        'Menvogue',
-                        style: GoogleFonts.cormorant(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Icon(Icons.shopping_bag),
-                    ],
-                  ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.25,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 222, 244, 249),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          color: const Color.fromARGB(255, 0, 0, 0),
-                          width: 2,
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(Icons.menu),
+                        Text(
+                          'Menvogue',
+                          style: GoogleFonts.cormorant(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      hintText: "Search.....",
-                      filled: true,
-                      fillColor: const Color.fromARGB(192, 255, 252, 223),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        Icon(Icons.shopping_bag),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            width: 2,
+                          ),
+                        ),
+                        hintText: "Search.....",
+                        filled: true,
+                        fillColor: const Color.fromARGB(192, 255, 252, 223),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 5),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+            SizedBox(height: 25),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Flash Sells',
+                        style: GoogleFonts.robotoMono(fontSize: 24),
+                      ),
+                      SizedBox(width: 5),
+                      Icon(CupertinoIcons.flame, color: Colors.red),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => flashSale()),
+                      );
+                    },
+                    child: Text(
+                      'Shop More..',
+                      style: GoogleFonts.robotoMono(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Column(
               children: [
-                Text('Flash Sells', style: GoogleFonts.robotoMono(fontSize: 24),),
-                SizedBox(width: 5,),
-                Icon(CupertinoIcons.flame,color: Colors.red,)
+                Container(
+                  height: 200,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 222, 244, 249),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: flashProducts.length,
+                    itemBuilder: (context, index) {
+                      final item = flashProducts[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 150,
+                          height: 180,
+                          child: Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                               
+                                child: Image.network(
+                                  item['image_url']?.toString() ?? '',
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      color: Colors.grey.shade300,
+                                      child: const Icon(Icons.error, size: 40),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    item['discount']?.toString() ?? '',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 10,
+                                right: 10,
+                                bottom: 10,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(78, 0, 0, 0),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        item['name']?.toString() ?? '',
+                                        style: GoogleFonts.robotoMono(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        item['price']?.toString() ?? '',
+                                        style: GoogleFonts.robotoMono(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
-          ),
-
-          Column(
-            children: [
-              
-              Container(
-                height: 200,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  color:const Color.fromARGB(255, 222, 244, 249),
-                  borderRadius: BorderRadius.circular(20)
-                  
-                ),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: flash.length,
-                  itemBuilder: (context, index) {
-                    final item = flash[index];
-              
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: 150,
-                        height: 180,
-                        child: Stack(
+            SizedBox(height: 25),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text(
+                    'All Products',
+                    style: GoogleFonts.robotoMono(fontSize: 24),
+                  ),
+                  SizedBox(width: 5),
+                  Icon(CupertinoIcons.shopping_cart, color: Colors.red),
+                ],
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: const Color.fromARGB(255, 222, 244, 249),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 70,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.asset(
-                                item['image'],
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: double.infinity,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12, right: 3),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Trending",
+                                            style: GoogleFonts.robotoMono(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Icon(CupertinoIcons.flame_fill),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-              
-                            Positioned(
-                              top: 8,
-                              right: 8,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 3,
+                                right: 3,
+                              ),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
+                                height: 40,
                                 decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(12),
+                                  color: const Color.fromARGB(
+                                    255,
+                                    255,
+                                    255,
+                                    255,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(),
                                 ),
-                                child: Text(
-                                  item['discount'],
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Shoes",
+                                        style: GoogleFonts.robotoMono(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Image.asset(
+                                        'icons/shoes.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
-              
-                            Positioned(
-                              left: 10,
-                              right: 10,
-                              bottom: 10,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 3,
+                                right: 3,
+                              ),
                               child: Container(
-                                padding: const EdgeInsets.all(8),
+                                height: 40,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(78, 0, 0, 0),
-                                  borderRadius: BorderRadius.circular(12),
+                                  color: const Color.fromARGB(
+                                    255,
+                                    255,
+                                    255,
+                                    255,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      item['name'],
-                                      style: GoogleFonts.robotoMono(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Watches",
+                                        style: GoogleFonts.robotoMono(
+                                          fontSize: 16,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      item['price'],
-                                      style: GoogleFonts.robotoMono(
-                                        color: Colors.white,
-                                        fontSize: 12,
+                                      SizedBox(width: 5),
+                                      Image.asset(
+                                        'icons/wrist-watch.png',
+                                        width: 24,
+                                        height: 24,
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 3,
+                                right: 3,
+                              ),
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(
+                                    255,
+                                    255,
+                                    255,
+                                    255,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Wallet",
+                                        style: GoogleFonts.robotoMono(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Image.asset(
+                                        'icons/wallet.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 3,
+                                right: 3,
+                              ),
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(
+                                    255,
+                                    255,
+                                    255,
+                                    255,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Cloths",
+                                        style: GoogleFonts.robotoMono(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Image.asset(
+                                        'icons/brand.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 3,
+                                right: 3,
+                              ),
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(
+                                    255,
+                                    255,
+                                    255,
+                                    255,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Shirts",
+                                        style: GoogleFonts.robotoMono(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Image.asset(
+                                        'icons/tshirt.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 3,
+                                right: 3,
+                              ),
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(
+                                    255,
+                                    255,
+                                    255,
+                                    255,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Bags",
+                                        style: GoogleFonts.robotoMono(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Image.asset(
+                                        'icons/online-shopping.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 3,
+                                right: 3,
+                              ),
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(
+                                    255,
+                                    255,
+                                    255,
+                                    255,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Pants",
+                                        style: GoogleFonts.robotoMono(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Image.asset(
+                                        'icons/pants.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 5),
-           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text('All Products', style: GoogleFonts.robotoMono(fontSize: 24),),
-                SizedBox(width: 5,),
-                Icon(CupertinoIcons.flame,color: Colors.red,)
-              ],
-            ),
-          ),
-          Expanded(
-            child: SizedBox(
-              child: SingleChildScrollView(
-                child: Container(
-                  height: 1000,
-                  width: MediaQuery.of(context).size.width,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromARGB(255, 222, 244, 249),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                       
-                      
-
-                        Container(
-                          height: 70,
-
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                    isloading
+                        ? Center(
+                            child: Column(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                    right: 3,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                            255,
-                                            255,
-                                            255,
-                                            255,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            15,
-                                          ),
-                                          border: Border.all(),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Trending",
-                                                style: GoogleFonts.robotoMono(
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                              Icon(CupertinoIcons.flame_fill),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                    left: 3,
-                                    right: 3,
-                                  ),
-                                  child: Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        255,
-                                        255,
-                                        255,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Shoes",
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          SizedBox(width: 5),
-                                          Image.asset(
-                                            'icons/shoes.png',
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                    left: 3,
-                                    right: 3,
-                                  ),
-                                  child: Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        255,
-                                        255,
-                                        255,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Watches",
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          SizedBox(width: 5),
-                                          Image.asset(
-                                            'icons/wrist-watch.png',
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                    left: 3,
-                                    right: 3,
-                                  ),
-                                  child: Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        255,
-                                        255,
-                                        255,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Wallet",
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          SizedBox(width: 5),
-                                          Image.asset(
-                                            'icons/wallet.png',
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                    left: 3,
-                                    right: 3,
-                                  ),
-                                  child: Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        255,
-                                        255,
-                                        255,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Cloths",
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          SizedBox(width: 5),
-                                          Image.asset(
-                                            'icons/brand.png',
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                    left: 3,
-                                    right: 3,
-                                  ),
-                                  child: Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        255,
-                                        255,
-                                        255,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Shirts",
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          Image.asset(
-                                            'icons/tshirt.png',
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                    left: 3,
-                                    right: 3,
-                                  ),
-                                  child: Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        255,
-                                        255,
-                                        255,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Bags",
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          Image.asset(
-                                            'icons/online-shopping.png',
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                    left: 3,
-                                    right: 3,
-                                  ),
-                                  child: Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        255,
-                                        255,
-                                        255,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Pants",
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          Image.asset(
-                                            'icons/pants.png',
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                CircularProgressIndicator(),
+                                SizedBox(height: 20),
+                                Text("Loading products..."),
                               ],
                             ),
-                          ),
-                        ),
-
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: leftProducts.length,
-                                  itemBuilder: (context, index) {
-                                    final item = leftProducts[index];
-
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                        bottom: 15,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                          )
+                        : allProducts.isEmpty
+                        ? Center(
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  size: 50,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(height: 10),
+                                Text("No products found"),
+                              ],
+                            ),
+                          )
+                        : GridView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.only(top: 10),
+                            itemCount: allProducts.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  childAspectRatio: 0.65,
+                                ),
+                            itemBuilder: (context, index) {
+                              final item = allProducts[index];
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 7,
+                                      child: Stack(
                                         children: [
                                           ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                            child: Image.asset(
-                                              item['image'],
+                                            borderRadius:
+                                                const BorderRadius.vertical(
+                                                  top: Radius.circular(15),
+                                                ),
+
+                                            child: Image.network(
+                                              item['image']?.toString() ?? '',
+                                              width: double.infinity,
+                                              height: double.infinity,
                                               fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                    return Container(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      child: Icon(
+                                                        Icons.error,
+                                                        size: 40,
+                                                      ),
+                                                    );
+                                                  },
                                             ),
                                           ),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            item['name'],
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                          Text(
-                                            item['price'],
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 16,
+                                          const Positioned(
+                                            top: 8,
+                                            right: 8,
+                                            child: CircleAvatar(
+                                              radius: 14,
+                                              backgroundColor: Colors.white,
+                                              child: Icon(
+                                                Icons.favorite_border,
+                                                size: 18,
+                                                color: Colors.black,
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                    );
-                                  },
-                                ),
-                              ),
-
-                              SizedBox(width: 8),
-
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: rightProducts.length,
-                                  itemBuilder: (context, index) {
-                                    final item = rightProducts[index];
-
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                        bottom: 15,
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(item['name'].toString()),
+                                            const SizedBox(height: 4),
+                                            Text(item['price'].toString()),
+                                          ],
+                                        ),
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                            child: Image.asset(
-                                              item['image'],
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            item['name'],
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                          Text(
-                                            item['price'],
-                                            style: GoogleFonts.robotoMono(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                              );
+                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(top: 5),
         child: Container(
@@ -740,13 +755,45 @@ class _dashScreenState extends State<dashScreen> {
               topRight: Radius.circular(20),
             ),
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Icon(Icons.home, color: Colors.black),
-              Icon(Icons.search, color: Colors.black),
-              Icon(Icons.favorite_border, color: Colors.black),
-              Icon(Icons.person, color: Colors.black),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => dashScreen()),
+                  );
+                },
+                child: Icon(CupertinoIcons.home),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => searchPage()),
+                  );
+                },
+                child: Icon(CupertinoIcons.search),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => searchPage()),
+                  );
+                },
+                child: Icon(CupertinoIcons.square_favorites),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  );
+                },
+                child: Icon(CupertinoIcons.person),
+              ),
             ],
           ),
         ),

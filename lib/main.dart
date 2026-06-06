@@ -1,4 +1,6 @@
 import 'package:ecommerce_app/screens/dashboard.dart';
+import 'package:ecommerce_app/screens/flashsale.dart';
+import 'package:ecommerce_app/screens/profile.dart';
 import 'package:ecommerce_app/screens/splash.dart';
 import 'package:flutter/material.dart';
 

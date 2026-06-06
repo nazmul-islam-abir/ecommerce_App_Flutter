@@ -1,59 +1,94 @@
-<div align="center">
-  <!-- Add your two screenshots here -->
-  <img src="assets\Screenshot 2026-06-04 172015.png" alt="Initial Screen" width="250"/>
-  <img src="assets\Screenshot 2026-06-04 172858.png" alt="Initial Screen" width="250"/>
-  
-  <img src="assets\Screenshot 2026-06-04 172043.png" alt="Dashboard Screen" width="250"/>
-  <img src="assets\Screenshot 2026-06-04 172644.png" alt="Dashboard Screen" width="250"/>
-  <img src="assets\Screenshot 2026-06-04 211937.png" alt="Dashboard Screen" width="250"/>
-  <br/>
-  <em>Left: Initial Screen | Right: Dashboard Screen</em>
-</div>
-
-<br/>
-
 # 👔 Menvogue - Men's Fashion E-Commerce App
 
-**Menvogue** is a modern, stylish e-commerce mobile application built with **Flutter**. It provides a seamless shopping experience for men's fashion products, including shoes, watches, wallets, clothing, and accessories. The app features a visually appealing onboarding screen and a fully functional product dashboard.
+<div align="center">
+  <img src="1.png" width="200" alt="Splash Screen"/>
+  <img src="2.png" width="200" alt="Dashboard Screen"/>
+  <img src="3.png" width="200" alt="Flash Sale Screen"/>
+  <br/>
+  <img src="4.png" width="200" alt="Search Screen"/>
+  <img src="5.png" width="200" alt="Profile Screen"/>
+  <img src="6.png" width="200" alt="Products Grid"/>
+  <img src="7.png" width="200" alt="Flash Sale Details"/>
+  <br/>
+  <em>Menvogue - Modern Men's Fashion E-Commerce App</em>
+</div>
+
+## 📱 Overview
+
+**Menvogue** is a feature-rich e-commerce mobile application built with **Flutter** that provides a seamless shopping experience for men's fashion products, including shoes, watches, wallets, clothing, and accessories. The app integrates with **Supabase** backend for real-time data fetching and offers a modern, intuitive user interface.
 
 ## ✨ Features
 
-### 🚀 Initial Screen
-- **Horizontal Scrolling Categories:** Browse through different fashion categories like Men's Fashion, Wallets, Perfumes, and Shoes with a sleek horizontal scroll.
-- **Rotated Text Design:** Unique rotated text elements for a modern, edgy look.
-- **Brand Highlight:** The brand name "Menvogue" is prominently displayed.
-- **Discover Button:** A prominent, tappable button to navigate to the main dashboard.
+### 🚀 Splash/Onboarding Screen
+- Horizontal scrolling categories (Fashion, Wallets, Perfumes, Shoes)
+- Rotated text design for modern aesthetics
+- Brand name "Menvogue" prominently displayed
+- Discover button for navigation to dashboard
 
-### 📱 Dashboard Screen
-- **Custom App Bar:** Includes a menu icon, brand name, and shopping bag icon.
-- **Search Functionality:** A fully styled search bar for users to find products easily.
-- **Category Chips:** Horizontal scrollable list of product categories (Trending, Shoes, Watches, Wallet, Cloths, Shirts, Bags, Pants) with relevant icons.
-- **Two-Column Product Grid:** Products are displayed in a responsive two-column grid layout, split between `leftProducts` and `rightProducts`.
-- **Product Cards:** Each product shows an image, name, and price.
-- **Bottom Navigation Bar:** Quick access to Home, Search, Favorites, and Profile sections.
+### 📊 Dashboard Screen
+- Custom header with menu icon, brand name, and shopping bag
+- Search bar for product discovery
+- **Flash Sales Section** - Horizontal scroll of discounted products with discount badges
+- **Category Filters** - Trending, Shoes, Watches, Wallet, Cloths, Shirts, Bags, Pants
+- **Product Grid** - Responsive two-column grid layout
+- **Bottom Navigation** - Home, Search, Favorites, Profile
 
-### 🛍️ Product Catalog
-The app comes pre-loaded with sample product data, including:
-- **Left Column Products:** Shoes & Watch, Oxford Shoes, Wallet (multiple variations)
-- **Right Column Products:** Formal Suit, Wallet, Black Shoes, Rolex Watch
+### 🔥 Flash Sale Screen
+- Dedicated page for all discounted products
+- Percentage-off discount badges
+- Special header with flash sale branding
 
-*Note: The product data is currently hardcoded and can be easily replaced with API integration.*
+### 🔍 Search Screen
+- Dedicated product search interface
+- Back navigation to dashboard
 
-## 📱 Screenshots
-
-*(Add your actual screenshots here)*
-
-| Initial Screen | Dashboard Screen |
-|----------------|------------------|
-| *[Placeholder]* | *[Placeholder]* |
+### 👤 Profile Screen
+- User profile display (name, email, profile picture)
+- Account sections (Orders, Favorites, Shipping Address, Cards, Vouchers)
+- Logout option
 
 ## 🛠️ Tech Stack
 
-- **Framework:** Flutter (SDK)
-- **Language:** Dart
-- **UI Enhancements:**
-  - `google_fonts` - for custom typography (Cormorant, Roboto Mono, Orbitron, Electrolize)
-  - `CupertinoIcons` & `Material Icons` - for iconography
-- **Architecture:** StatefulWidget for dynamic content, simple state management
+| Technology | Purpose |
+|------------|---------|
+| Flutter | Frontend framework |
+| Dart | Programming language |
+| Supabase | Backend database & API |
+| HTTP Package | API calls & data fetching |
+| Google Fonts | Custom typography |
+| Cupertino Icons | iOS-style icons |
 
-## 📂 Project Structure
+## 📡 API Integration
+
+### Supabase Connection
+
+The app connects to a **Supabase** backend with two main tables:
+
+**Products Table** (`/rest/v1/products`)
+- Fetch all available products
+- Fields: `id`, `name`, `price`, `image`, `category`
+
+**Flash Sale Table** (`/rest/v1/flashsale`)
+- Fetch discounted products
+- Fields: `id`, `name`, `price`, `image_url`, `discount`
+
+### How API Calls Work
+
+```dart
+// API Headers with Supabase Key
+headers: {
+  "apikey": "YOUR_SUPABASE_API_KEY"
+}
+
+// Fetch Products Example
+Future<void> fetchProducts() async {
+  final response = await http.get(
+    Uri.parse('URL/products'),
+    headers: { "apikey": "KEY" },
+  );
+  
+  if (response.statusCode == 200) {
+    final jsonData = jsonDecode(response.body);
+    setState(() => allProducts = jsonData);
+  }
+}

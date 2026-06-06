@@ -1,14 +1,14 @@
 # 👔 Menvogue - Men's Fashion E-Commerce App
 
 <div align="center">
-  <img src="1.png" width="200" alt="Splash Screen"/>
-  <img src="2.png" width="200" alt="Dashboard Screen"/>
-  <img src="3.png" width="200" alt="Flash Sale Screen"/>
+  <img src="assets/1.png.png" width="200" alt="Splash Screen"/>
+  <img src="assets/2.png" width="200" alt="Dashboard Screen"/>
+  <img src="assets/3.png" width="200" alt="Flash Sale Screen"/>
   <br/>
-  <img src="4.png" width="200" alt="Search Screen"/>
-  <img src="5.png" width="200" alt="Profile Screen"/>
-  <img src="6.png" width="200" alt="Products Grid"/>
-  <img src="7.png" width="200" alt="Flash Sale Details"/>
+  <img src="assets/4.png" width="200" alt="Search Screen"/>
+  <img src="assets/5.png" width="200" alt="Profile Screen"/>
+  <img src="assets/6.png" width="200" alt="Products Grid"/>
+  <img src="assets/7.png" width="200" alt="Flash Sale Details"/>
   <br/>
   <em>Menvogue - Modern Men's Fashion E-Commerce App</em>
 </div>

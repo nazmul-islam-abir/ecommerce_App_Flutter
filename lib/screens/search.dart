@@ -52,7 +52,7 @@ class searchPage extends StatelessWidget {
                       const SizedBox(width: 15),
                       // Title
                       Text(
-                        'Menvogue',
+                        'Search',
                         style: GoogleFonts.cormorant(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,

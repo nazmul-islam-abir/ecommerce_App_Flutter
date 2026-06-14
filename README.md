@@ -1,212 +1,136 @@
-# Menvogue 👔
+# Menvogue
 
-A modern Flutter-based men's fashion e-commerce application integrated with Supabase REST API.
+Menvogue is a Flutter men's fashion e-commerce app with a mobile-first shopping experience, product catalog, flash sales, order history, profile screen, and Supabase REST API integration.
 
+<p align="center">
+  <img src="assets/ss/slideshow.gif" width="360" alt="Menvogue screenshot slideshow" />
+</p>
 
-<div align="center">
-  <img src="assets/1.png" width="200" alt="Splash Screen"/>
-  <img src="assets/2.png" width="200" alt="Dashboard Screen"/>
-  <img src="assets/3.png" width="200" alt="Flash Sale Screen"/>
-  <img src="assets/8.png" width="200" alt="Search Screen"/>
-  <br/>
-  <img src="assets/4.png" width="200" alt="Search Screen"/>
-  <img src="assets/5.png" width="200" alt="Profile Screen"/>
-  <img src="assets/6.png" width="200" alt="Products Grid"/>
-  <img src="assets/7.png" width="200" alt="Flash Sale Details"/>
-  <br/>
-  <em>Menvogue - Modern Men's Fashion E-Commerce App</em>
-</div>
+## Screenshots Slideshow
 
-## ✨ Features
+The slideshow above cycles through every screenshot stored in `assets/ss`. Each slide includes a title describing what the screen shows.
 
-### 🏠 Home Dashboard
+## Screenshot Gallery
 
-* Modern UI design
-* Product categories
-* Flash sale section
-* Product grid layout
-* Responsive design
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <strong>Splash - Men's Fashion Hero</strong><br/>
+      <img src="assets/ss/splash-fashion-hero.png" width="220" alt="Splash screen showing a men's fashion hero image, Menvogue brand, and Discover button" />
+    </td>
+    <td align="center" width="33%">
+      <strong>Splash - Men's Shoes Hero</strong><br/>
+      <img src="assets/ss/splash-shoes-hero.png" width="220" alt="Splash screen showing men's shoes styling, Menvogue brand, and Discover button" />
+    </td>
+    <td align="center" width="33%">
+      <strong>Splash - Men's Wallet Hero</strong><br/>
+      <img src="assets/ss/splash-wallet-hero.png" width="220" alt="Splash screen showing a men's wallet hero image, Menvogue brand, and Discover button" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <strong>Home Dashboard</strong><br/>
+      <img src="assets/ss/home-dashboard.png" width="220" alt="Home dashboard with search bar, flash sales carousel, categories, and bottom navigation" />
+    </td>
+    <td align="center" width="33%">
+      <strong>Product Catalog Overview</strong><br/>
+      <img src="assets/ss/product-catalog-overview.png" width="220" alt="Product catalog overview showing category icons and a two-column product grid" />
+    </td>
+    <td align="center" width="33%">
+      <strong>Product Catalog Scroll</strong><br/>
+      <img src="assets/ss/product-catalog-scroll.png" width="220" alt="Scrolled product catalog with product cards, prices, favorites, and buy now actions" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <strong>Flash Sales Listing</strong><br/>
+      <img src="assets/ss/flash-sales-listing.png" width="220" alt="Flash sales page showing discounted products in a two-column grid" />
+    </td>
+    <td align="center" width="33%">
+      <strong>Search Screen</strong><br/>
+      <img src="assets/ss/search-screen.png" width="220" alt="Search screen with search input and placeholder products section" />
+    </td>
+    <td align="center" width="33%">
+      <strong>Orders List</strong><br/>
+      <img src="assets/ss/orders-list.png" width="220" alt="Orders list screen showing order IDs, dates, item counts, statuses, and total prices" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <strong>Profile Screen</strong><br/>
+      <img src="assets/ss/profile-screen.png" width="220" alt="Profile screen with user information, profile edit action, account menu, and logout option" />
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 
-### 🔥 Flash Sales
+## Features
 
-* Featured products
-* Discount badges
-* Horizontal scrolling cards
-* Real-time data from Supabase
+- Splash/onboarding screens for men's fashion, shoes, and wallet collections
+- Home dashboard with search, flash sale preview, categories, and product grid
+- Flash sales page with discount badges and buy actions
+- Product catalog cards with images, prices, favorite icons, and cart actions
+- Search screen layout for product discovery
+- Order list with order ID, date, item count, status, and total price
+- Profile screen with user details and account menu options
+- Bottom navigation for Home, Search, Orders, and Profile
 
-### 🛍️ Product Catalog
+## Tech Stack
 
-* Product image
-* Product name
-* Product price
-* Product ratings
-* Category filtering
-* Grid view layout
+- Flutter
+- Dart
+- Supabase REST API
+- HTTP package
+- Google Fonts
+- Cupertino and Material icons
 
-### 🔍 Search
+## API Endpoints
 
-* Product search interface
-* Quick product discovery
-* User-friendly navigation
-
-### 📦 Order Management
-
-* View all orders
-* Order status tracking
-* Order history
-* Product thumbnails
-* Order date display
-* Total price calculation
-* Item count tracking
-
-### 👤 User Profile
-
-* Profile management page
-* User account section
-
----
-
-## 🛠️ Technologies Used
-
-* Flutter
-* Dart
-* Supabase
-* REST API
-* HTTP Package
-* Google Fonts
-
----
-
-## 🗄️ Database Tables
-
-### Products Table
-
-| Column        | Type    |
-| ------------- | ------- |
-| id            | bigint  |
-| name          | text    |
-| price         | integer |
-| image         | text    |
-| rating        | numeric |
-| category      | text    |
-| is_flash_sale | boolean |
-| discount      | text    |
-
-### Orders Table (myorders)
-
-| Column      | Type    |
-| ----------- | ------- |
-| order_id    | text    |
-| image_url   | text    |
-| date        | text    |
-| items_count | integer |
-| status      | text    |
-| total_price | integer |
-
----
-
-## 🔌 API Integration
-
-### Products API
+The app fetches product, flash sale, and order data from Supabase REST endpoints.
 
 ```http
-GET /rest/v1/products?select=*
-```
-
-### Flash Sale Products
-
-```http
-GET /rest/v1/products?is_flash_sale=eq.true
-```
-
-### Orders API
-
-```http
+GET /rest/v1/products
+GET /rest/v1/flashsale
 GET /rest/v1/myorders
 ```
 
-The application uses Supabase REST API endpoints and retrieves data through HTTP requests.
-
----
-
-## 🏗️ Architecture
+## Project Structure
 
 ```text
-Flutter App
-     │
-     ▼
-HTTP Requests
-     │
-     ▼
-Supabase REST API
-     │
- ┌───┴──────────┐
- ▼              ▼
-Products      Orders
-Table         Table
+lib/
+  main.dart
+  screens/
+    app.dart
+    dashboard.dart
+    flashsale.dart
+    list.dart
+    profile.dart
+    search.dart
+    splash.dart
+assets/
+  icons/
+  ss/
 ```
 
----
-
-## 📱 Screens
-
-* Dashboard Screen
-* Search Screen
-* Order List Screen
-* Profile Screen
-
----
-
-## 🚀 Future Improvements
-
-* User Authentication
-* Shopping Cart
-* Wishlist
-* Checkout Flow
-* Payment Gateway Integration
-* Push Notifications
-* Product Reviews
-* Order Tracking Timeline
-* Admin Dashboard
-
----
-
-## ⚙️ Setup
+## Setup
 
 ```bash
 flutter pub get
 flutter run
 ```
 
-### Build APK
+## Build
 
 ```bash
 flutter build apk --release
-```
-
-### Build Web
-
-```bash
 flutter build web
 ```
 
----
+## Learning Objectives
 
-## 📚 Learning Objectives
-
-This project demonstrates:
-
-* Flutter UI Development
-* REST API Integration
-* Cloud Database Management
-* State Management with StatefulWidget
-* JSON Parsing
-* HTTP Requests
-* Supabase Backend Integration
-* E-commerce Application Design
-
----
-
-## 👨‍💻 Developer
-
-Developed as a learning project to explore Flutter application development and cloud backend integration using Supabase.
+- Build a Flutter e-commerce interface
+- Display remote data from Supabase REST API
+- Parse JSON responses into UI lists and grids
+- Use reusable mobile navigation patterns
+- Present product, order, and profile screens in a complete shopping flow
